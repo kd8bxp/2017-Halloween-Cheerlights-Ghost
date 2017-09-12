@@ -25,8 +25,6 @@ const char* password = "";
 const char* mqtt_server = "iot.eclipse.org";
 
 String color;
-
-String lastCommandString = "black";
 int brightness = 150;
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(1, D2, NEO_GRB + NEO_KHZ800);
@@ -39,79 +37,70 @@ int value = 0;
 
 void setup() {
   pinMode(BUILTIN_LED, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
-  Serial.begin(115200);
+  //Serial.begin(115200);
   setup_wifi();
   client.setServer(mqtt_server, 1883);
   client.setCallback(callback);
   strip.begin();
-strip.show();
-strip.setBrightness(brightness);
+  strip.show();
+  strip.setBrightness(brightness);
 }
 
 void setup_wifi() {
 
   delay(10);
   // We start by connecting to a WiFi network
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
+  //Serial.println();
+  //Serial.print("Connecting to ");
+  //Serial.println(ssid);
 
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
-    Serial.print(".");
+  //  Serial.print(".");
   }
 
-  Serial.println("");
-  Serial.println("WiFi connected");
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
+  //Serial.println("");
+  //Serial.println("WiFi connected");
+  //Serial.println("IP address: ");
+  //Serial.println(WiFi.localIP());
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
-  Serial.print("Message arrived [");
-  Serial.print(topic);
-  Serial.print("] ");
+  //Serial.print("Message arrived [");
+  //Serial.print(topic);
+  //Serial.print("] ");
   color = "";
   for (int i = 0; i < length; i++) {
-    Serial.print((char)payload[i]);
+    //Serial.print((char)payload[i]);
     color+=(char)payload[i];
   }
-  Serial.println();
-  Serial.println("Color: " + color);
-
-  // Switch on the LED if an 1 was received as first character
-  if ((char)payload[0] == '1') {
-    digitalWrite(BUILTIN_LED, LOW);   // Turn the LED on (Note that LOW is the voltage level
-    // but actually the LED is on; this is because
-    // it is acive low on the ESP-01)
-  } else {
-    digitalWrite(BUILTIN_LED, HIGH);  // Turn the LED off by making the voltage HIGH
-  }
+  //Serial.println();
+  //Serial.println("Color: " + color);
 
 }
 
 void reconnect() {
   // Loop until we're reconnected
   while (!client.connected()) {
-    Serial.print("Attempting MQTT connection...");
+    //Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (client.connect("ESP8266ClientCheerlightGhost123")) {
-      Serial.println("connected");
-      // Once connected, publish an announcement...
-      //client.publish("outTopic", "hello world");
-      // ... and resubscribe
-      client.subscribe("cheerlights");
+    uint32_t chipid=ESP.getChipId();
+    char clientid[25];
+    snprintf(clientid,25,"CheerlightGhost-%08X",chipid);
+    if (client.connect(clientid)) {
+            client.subscribe("cheerlights");
     } else {
-      Serial.print("failed, rc=");
-      Serial.print(client.state());
-      Serial.println(" try again in 5 seconds");
+      //Serial.print("failed, rc=");
+      //Serial.print(client.state());
+      //Serial.println(" try again in 5 seconds");
       // Wait 5 seconds before retrying
       delay(5000);
     }
   }
 }
+
 void loop() {
 
   if (!client.connected()) {
@@ -136,11 +125,11 @@ void setcolor() {
 } else if (color == "purple") {colorDisplay(strip.Color(102,51,204),50); //looks more blue to me (maybe 160, 32, 240)
 } else if (color == "orange") {colorDisplay(strip.Color(255,153,0),50); //looks more yellow to me
 } else if (color == "pink") { colorDisplay(strip.Color(255, 192, 203),50);}
+
 }
 
 void colorDisplay(uint32_t c, uint8_t wait) {
-  
-  //for(uint16_t i=0; i<strip.numPixels(); i++) {
+
 strip.setPixelColor(0, c);
 strip.show();
 delay(wait);
