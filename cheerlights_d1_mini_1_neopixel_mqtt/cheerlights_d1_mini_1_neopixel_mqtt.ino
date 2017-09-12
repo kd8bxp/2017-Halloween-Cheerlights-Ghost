@@ -1,4 +1,18 @@
+/* Copyright (c) 2017 LeRoy Miller
+ *  
+ *  This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses>
+ */
 
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
@@ -105,29 +119,31 @@ void loop() {
   }
   client.loop();
 setcolor();  
+colorDisplay(strip.Color(0,0,0),50);
+
 }
 
 void setcolor() {
-  if (color == "white") {colorWipe(strip.Color(255,255,255),50);
-} else if (color == "warmwhite" || color == "oldlace" ) {colorWipe(strip.Color(253,245,230),50);
-} else if (color == "black" || color == "off") {colorWipe(strip.Color(0,0,0),50);
-} else if (color == "red") { colorWipe(strip.Color(255,0,0),50);
-} else if (color == "green") { colorWipe(strip.Color(0, 255, 0), 50);
-} else if (color == "blue") { colorWipe(strip.Color(0,0,255),50);
-} else if (color == "cyan") {colorWipe(strip.Color(0,255,255),50);
-} else if (color == "magenta") {colorWipe(strip.Color(255,0,255),50);
-} else if (color == "yellow") {colorWipe(strip.Color(255,255,0),50);
-} else if (color == "purple") {colorWipe(strip.Color(102,51,204),50);
-} else if (color == "orange") {colorWipe(strip.Color(255,153,0),50);
-} else if (color == "pink") { colorWipe(strip.Color(255, 192, 203),50);}
+  if (color == "white") {colorDisplay(strip.Color(255,255,255),50);
+} else if (color == "warmwhite" || color == "oldlace" ) {colorDisplay(strip.Color(253,245,230),50); //has a cyan color to me.
+} else if (color == "black" || color == "off") {colorDisplay(strip.Color(0,0,0),50);
+} else if (color == "red") { colorDisplay(strip.Color(255,0,0),50);
+} else if (color == "green") { colorDisplay(strip.Color(0, 255, 0), 50);
+} else if (color == "blue") { colorDisplay(strip.Color(0,0,255),50);
+} else if (color == "cyan") {colorDisplay(strip.Color(0,255,255),50);
+} else if (color == "magenta") {colorDisplay(strip.Color(255,0,255),50);
+} else if (color == "yellow") {colorDisplay(strip.Color(255,255,0),50); //looks green/yellow to me
+} else if (color == "purple") {colorDisplay(strip.Color(102,51,204),50); //looks more blue to me (maybe 160, 32, 240)
+} else if (color == "orange") {colorDisplay(strip.Color(255,153,0),50); //looks more yellow to me
+} else if (color == "pink") { colorDisplay(strip.Color(255, 192, 203),50);}
 }
 
-void colorWipe(uint32_t c, uint8_t wait) {
+void colorDisplay(uint32_t c, uint8_t wait) {
   
   //for(uint16_t i=0; i<strip.numPixels(); i++) {
 strip.setPixelColor(0, c);
 strip.show();
-
+delay(wait);
 }
 
 
