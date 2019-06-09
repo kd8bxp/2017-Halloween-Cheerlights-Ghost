@@ -20,8 +20,8 @@
 
 // Update these with values suitable for your network.
 
-const char* ssid = "Motel6";
-const char* password = "";
+const char* ssid = "homeinternet";
+const char* password = "trixie4me";
 const char* mqtt_server = "iot.eclipse.org";
 
 String color;
@@ -37,7 +37,7 @@ int value = 0;
 
 void setup() {
   pinMode(BUILTIN_LED, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
-  //Serial.begin(115200);
+  Serial.begin(9600);
   setup_wifi();
   client.setServer(mqtt_server, 1883);
   client.setCallback(callback);
@@ -50,41 +50,41 @@ void setup_wifi() {
 
   delay(10);
   // We start by connecting to a WiFi network
-  //Serial.println();
-  //Serial.print("Connecting to ");
-  //Serial.println(ssid);
+  Serial.println();
+  Serial.print("Connecting to ");
+  Serial.println(ssid);
 
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
-  //  Serial.print(".");
+    Serial.print(".");
   }
 
-  //Serial.println("");
-  //Serial.println("WiFi connected");
-  //Serial.println("IP address: ");
-  //Serial.println(WiFi.localIP());
+  Serial.println("");
+  Serial.println("WiFi connected");
+  Serial.println("IP address: ");
+  Serial.println(WiFi.localIP());
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
-  //Serial.print("Message arrived [");
-  //Serial.print(topic);
-  //Serial.print("] ");
+  Serial.print("Message arrived [");
+  Serial.print(topic);
+  Serial.print("] ");
   color = "";
   for (int i = 0; i < length; i++) {
-    //Serial.print((char)payload[i]);
+    Serial.print((char)payload[i]);
     color+=(char)payload[i];
   }
-  //Serial.println();
-  //Serial.println("Color: " + color);
+  Serial.println();
+  Serial.println("Color: " + color);
 
 }
 
 void reconnect() {
   // Loop until we're reconnected
   while (!client.connected()) {
-    //Serial.print("Attempting MQTT connection...");
+    Serial.print("Attempting MQTT connection...");
     // Attempt to connect
     uint32_t chipid=ESP.getChipId();
     char clientid[25];
@@ -92,9 +92,9 @@ void reconnect() {
     if (client.connect(clientid)) {
             client.subscribe("cheerlights");
     } else {
-      //Serial.print("failed, rc=");
-      //Serial.print(client.state());
-      //Serial.println(" try again in 5 seconds");
+      Serial.print("failed, rc=");
+      Serial.print(client.state());
+      Serial.println(" try again in 5 seconds");
       // Wait 5 seconds before retrying
       delay(5000);
     }
@@ -134,5 +134,3 @@ strip.setPixelColor(0, c);
 strip.show();
 delay(wait);
 }
-
-
