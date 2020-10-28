@@ -2,6 +2,11 @@
 
 https://www.instructables.com/id/2017-Halloween-Cheerlights-Ghost-Simple-Hardware-S/  
 
+## Libraries
+
+Uses Adafruit Neopixel (version 1.3.5), and PubSubClient (version 2.7 by Nick O'Leary)  libraries.  
+Because the Arduino IDE has been getting pretty bad handling libraries, I've included the libraries used in the src directory of the sketch. These libraries may have been slightly modified to work from the sketch directory, and do not include the examples.  
+
 ## Things To Do
 
 Add something spooky.... (?)
@@ -47,3 +52,4 @@ This program is free software: you can redistribute it and/or modify
     along with this program.  If not, see <http://www.gnu.org/licenses>
 
 ### 1.8.9 June 2019
+### 1.8.10 Oct 27, 2020 changed MQTT broker to official Cheerlights Broker

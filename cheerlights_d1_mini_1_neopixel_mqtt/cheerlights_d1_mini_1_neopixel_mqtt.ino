@@ -15,14 +15,14 @@
  */
 
 #include <ESP8266WiFi.h>
-#include <PubSubClient.h>
-#include <Adafruit_NeoPixel.h>
+#include "src/PubSubClient/PubSubClient.h"
+#include "src/Adafruit_NeoPixel/Adafruit_NeoPixel.h"
 
 // Update these with values suitable for your network.
 
-const char* ssid = "homeinternet";
-const char* password = "trixie4me";
-const char* mqtt_server = "iot.eclipse.org";
+const char* ssid = "";
+const char* password = "";
+const char* mqtt_server = "mqtt.cheerlights.com";
 
 String color;
 int brightness = 150;

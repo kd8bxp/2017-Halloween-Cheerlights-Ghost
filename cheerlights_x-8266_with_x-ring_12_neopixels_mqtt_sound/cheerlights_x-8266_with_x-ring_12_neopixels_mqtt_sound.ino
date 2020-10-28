@@ -15,15 +15,15 @@
  */
 
 #include <ESP8266WiFi.h>
-#include <PubSubClient.h>
-#include <Adafruit_NeoPixel.h>
+#include "src/PubSubClient/PubSubClient.h"
+#include "src/Adafruit_NeoPixel/Adafruit_NeoPixel.h"
 #include <SoftwareSerial.h>
 
 // Update these with values suitable for your network.
 
-const char* ssid = "Motel6";
+const char* ssid = "";
 const char* password = "";
-const char* mqtt_server = "iot.eclipse.org";
+const char* mqtt_server = "mqtt.cheerlights.com";
 
 #define ARDUINO_RX D7//should connect to TX of the Serial MP3 Player module
 #define ARDUINO_TX D8//connect to RX of the module
@@ -191,5 +191,3 @@ void sendCommand(int8_t command, int16_t dat)
     mySerial.write(Send_buf[i]) ;
   }
 }
-
-
